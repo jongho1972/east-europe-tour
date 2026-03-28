@@ -375,6 +375,10 @@ function toggleDay(dayNum) {
       map.panTo({ lat: d.places[0].lat, lng: d.places[0].lng });
       map.setZoom(14);
     }
+    setTimeout(() => {
+      const placesEl = document.getElementById("places-" + dayNum);
+      if (placesEl) placesEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }, 50);
   } else {
     resetHighlight();
   }
