@@ -102,8 +102,8 @@
         color: #888; border-bottom: 3px solid transparent;
       }
       .mobile-tab.active { color: #2c3e50; border-bottom-color: #2c3e50; }
-      #sidebar { width: 100%; min-width: unset; flex: 1; min-height: 0; overflow: hidden; }
-      #itinerary { min-height: 0; }
+      #sidebar { width: 100%; min-width: unset; flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+      #itinerary { flex: 1; min-height: 0; overflow-y: scroll; -webkit-overflow-scrolling: touch; }
       #map { flex: 1; min-height: 0; }
       body.show-map #sidebar { display: none; }
       body.show-map #map { display: block; }
