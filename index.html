@@ -117,10 +117,12 @@
         position: static; overflow-y: visible; height: auto;
         padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
       }
-      /* 지도: 탭 아래 전체 영역 */
-      #map {
+      /* 지도: 기본 숨김 → show-map 시 완전히 펼침 (Google Maps는 visible 상태에서만 정상 렌더링) */
+      #map { display: none; }
+      body.show-map #map {
+        display: block;
         position: fixed; top: 44px; left: 0; right: 0; bottom: 0;
-        z-index: 50; display: block;
+        z-index: 100;
       }
       body.show-map #sidebar { display: none; }
       #sidebar-header { display: none; }
