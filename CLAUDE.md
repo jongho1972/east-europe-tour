@@ -8,13 +8,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 | 프로젝트 | 경로 | 배포 URL |
 |----------|------|----------|
-| 여행 코스 지도 (제목: 동유럽 여행 코스 2026) | `동유럽여행일정지도.html` | https://east-europe-tour.netlify.app |
+| 여행 코스 지도 (제목: 동유럽 여행 코스 2026) | `index.html` | https://east-europe-tour.netlify.app |
 
 ## 배포 방식
 
 - **저장소**: https://github.com/jongho1972/east-europe-tour
 - GitHub `main` 브랜치 푸시 시 Netlify 자동 배포
-- `.gitignore`로 PDF, xlsx, gmap, gsheet, txt 파일은 제외 (HTML, CLAUDE.md만 관리)
+- `.gitignore`로 PDF, xlsx, gmap, gsheet, txt 파일은 제외 (`index.html`, `CLAUDE.md`만 관리)
 
 ## 동유럽여행일정지도.html 구조
 
