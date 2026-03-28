@@ -491,6 +491,19 @@ function initMap() {
   });
 
   renderSidebar("all");
+
+  // 모바일: 지도가 스크롤로 보일 때 resize 트리거
+  if (window.innerWidth <= 680) {
+    const mapEl = document.getElementById("map");
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        google.maps.event.trigger(map, "resize");
+        map.setCenter({ lat: 48.5, lng: 15.5 });
+        observer.disconnect();
+      }
+    }, { threshold: 0.1 });
+    observer.observe(mapEl);
+  }
 }
 </script>
 <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQ0NDsC42O-xsOUCZ26Gz-F2c0iDdicRs&callback=initMap&loading=async"></script>
