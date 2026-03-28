@@ -102,8 +102,8 @@
         color: #888; border-bottom: 3px solid transparent;
       }
       .mobile-tab.active { color: #2c3e50; border-bottom-color: #2c3e50; }
-      #sidebar { width: 100%; min-width: unset; height: 100%; }
-      #map { height: 100%; }
+      #sidebar { width: 100%; min-width: unset; flex: 1; overflow: hidden; }
+      #map { flex: 1; }
       body.show-map #sidebar { display: none; }
       body.show-map #map { display: block; }
       body:not(.show-map) #sidebar { display: flex; }
