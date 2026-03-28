@@ -1,0 +1,7 @@
+.DS_Store
+.claude/
+*.pdf
+*.xlsx
+*.gmap
+*.gsheet
+*.txt
