@@ -374,17 +374,11 @@ function toggleDay(dayNum) {
       map.panTo({ lat: d.places[0].lat, lng: d.places[0].lng });
       map.setZoom(14);
     }
-    scrollToMap();
   } else {
     resetHighlight();
   }
 }
 
-function scrollToMap() {
-  if (window.innerWidth <= 680) {
-    switchMobileTab("map");
-  }
-}
 
 function focusPlace(dayNum, placeIdx) {
   document.querySelectorAll(".place-item").forEach(el => el.classList.remove("active"));
@@ -395,7 +389,6 @@ function focusPlace(dayNum, placeIdx) {
   const p = d.places[placeIdx];
   map.panTo({ lat: p.lat, lng: p.lng });
   map.setZoom(15);
-  scrollToMap();
   const marker = allMarkers.find(m => m._dayNum === dayNum && m._placeIdx === placeIdx);
   if (marker) {
     infoWindow.setContent(`<div class="popup-content">
@@ -524,7 +517,17 @@ function switchMobileTab(tab) {
     tabs[0].classList.remove("active");
     tabs[1].classList.add("active");
     google.maps.event.trigger(map, "resize");
-    map.setCenter({ lat: 48.5, lng: 15.5 });
+    // 선택된 일차가 있으면 해당 위치로, 없으면 전체 보기
+    if (activeHighlightDay) {
+      const d = DAYS.find(x => x.day === activeHighlightDay);
+      if (d && d.places.length > 0) {
+        map.panTo({ lat: d.places[0].lat, lng: d.places[0].lng });
+        map.setZoom(14);
+      }
+    } else {
+      map.setCenter({ lat: 48.5, lng: 15.5 });
+      map.setZoom(6);
+    }
   } else {
     document.body.classList.remove("show-map");
     tabs[0].classList.add("active");
