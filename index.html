@@ -86,15 +86,39 @@
     .legend-item:last-child { margin-bottom: 0; }
     .legend-dot { width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; flex-shrink: 0; }
 
+    #mobile-tabs {
+      display: none;
+    }
+
     @media (max-width: 680px) {
-      body { flex-direction: column; height: auto; overflow-y: auto; }
-      #sidebar { width: 100%; min-width: unset; height: auto; overflow: visible; }
-      #itinerary { overflow-y: visible; height: auto; }
-      #map { height: 70vh; flex-shrink: 0; }
+      body { flex-direction: column; height: 100vh; overflow: hidden; }
+      #mobile-tabs {
+        display: flex; flex-shrink: 0;
+        background: #fff; border-bottom: 1px solid #ddd;
+      }
+      .mobile-tab {
+        flex: 1; padding: 10px; text-align: center;
+        font-size: 14px; font-weight: 600; cursor: pointer;
+        color: #888; border-bottom: 3px solid transparent;
+      }
+      .mobile-tab.active { color: #2c3e50; border-bottom-color: #2c3e50; }
+      #sidebar { width: 100%; min-width: unset; height: 100%; }
+      #map { height: 100%; }
+      body.show-map #sidebar { display: none; }
+      body.show-map #map { display: block; }
+      body:not(.show-map) #sidebar { display: flex; }
+      body:not(.show-map) #map { display: none; }
+      #sidebar-header { display: none; }
+      #legend { bottom: 16px; }
     }
   </style>
 </head>
 <body>
+
+<div id="mobile-tabs">
+  <div class="mobile-tab active" onclick="switchMobileTab('schedule')">📋 일정</div>
+  <div class="mobile-tab" onclick="switchMobileTab('map')">🗺 지도</div>
+</div>
 
 <div id="sidebar">
   <div id="sidebar-header">
@@ -358,7 +382,7 @@ function toggleDay(dayNum) {
 
 function scrollToMap() {
   if (window.innerWidth <= 680) {
-    document.getElementById("map").scrollIntoView({ behavior: "smooth" });
+    switchMobileTab("map");
   }
 }
 
@@ -491,18 +515,20 @@ function initMap() {
   });
 
   renderSidebar("all");
+}
 
-  // 모바일: 지도가 스크롤로 보일 때 resize 트리거
-  if (window.innerWidth <= 680) {
-    const mapEl = document.getElementById("map");
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        google.maps.event.trigger(map, "resize");
-        map.setCenter({ lat: 48.5, lng: 15.5 });
-        observer.disconnect();
-      }
-    }, { threshold: 0.1 });
-    observer.observe(mapEl);
+function switchMobileTab(tab) {
+  const tabs = document.querySelectorAll(".mobile-tab");
+  if (tab === "map") {
+    document.body.classList.add("show-map");
+    tabs[0].classList.remove("active");
+    tabs[1].classList.add("active");
+    google.maps.event.trigger(map, "resize");
+    map.setCenter({ lat: 48.5, lng: 15.5 });
+  } else {
+    document.body.classList.remove("show-map");
+    tabs[0].classList.add("active");
+    tabs[1].classList.remove("active");
   }
 }
 </script>
