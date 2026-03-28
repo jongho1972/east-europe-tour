@@ -91,18 +91,17 @@
     }
 
     @media (max-width: 680px) {
-      /* body: flex 컬럼, padding-top으로 fixed 탭 높이 확보 */
-      body {
-        flex-direction: column; height: 100vh; overflow: hidden;
-        padding-top: 44px;
-      }
+      /* body: flex 컬럼, overflow hidden */
+      body { flex-direction: column; height: 100vh; overflow: hidden; }
 
-      /* 탭: position:fixed로 항상 최상단 + 텍스트 보장 */
+      /* 탭: position:fixed로 항상 최상단 */
       #mobile-tabs {
         display: flex;
         position: fixed; top: 0; left: 0; right: 0; height: 44px;
         z-index: 9999; background: #fff; border-bottom: 1px solid #ddd;
       }
+      /* 스페이서: flex 흐름 안에서 44px 차지 → 탭 아래부터 콘텐츠 시작 */
+      #tab-spacer { display: block; height: 44px; flex-shrink: 0; }
       .mobile-tab {
         flex: 1; padding: 10px; text-align: center;
         font-size: 14px; font-weight: 600; cursor: pointer;
@@ -138,6 +137,7 @@
   <div class="mobile-tab active" onclick="switchMobileTab('schedule')">📋 일정</div>
   <div class="mobile-tab" onclick="switchMobileTab('map')">🗺 지도</div>
 </div>
+<div id="tab-spacer"></div>
 
 <div id="sidebar">
   <div id="sidebar-header">
