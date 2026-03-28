@@ -91,17 +91,15 @@
     }
 
     @media (max-width: 680px) {
-      /* body: flex 컬럼, overflow hidden */
-      body { flex-direction: column; height: 100vh; overflow: hidden; }
+      body { overflow: hidden; }
 
-      /* 탭: position:fixed로 항상 최상단 */
+      /* 탭: 항상 최상단 고정 */
       #mobile-tabs {
         display: flex;
         position: fixed; top: 0; left: 0; right: 0; height: 44px;
         z-index: 9999; background: #fff; border-bottom: 1px solid #ddd;
       }
-      /* 스페이서: flex 흐름 안에서 44px 차지 → 탭 아래부터 콘텐츠 시작 */
-      #tab-spacer { display: block; height: 44px; flex-shrink: 0; }
+      #tab-spacer { display: none; }
       .mobile-tab {
         flex: 1; padding: 10px; text-align: center;
         font-size: 14px; font-weight: 600; cursor: pointer;
@@ -109,22 +107,25 @@
       }
       .mobile-tab.active { color: #2c3e50; border-bottom-color: #2c3e50; }
 
-      /* 사이드바: 남은 공간 전체, 내부 스크롤 */
+      /* 사이드바: 탭 바로 아래 fixed, 자체 스크롤 */
       #sidebar {
+        position: fixed; top: 44px; left: 0; right: 0; bottom: 0;
         width: 100%; min-width: unset;
-        flex: 1; min-height: 0;
-        position: relative; overflow: hidden;
+        overflow-y: scroll; -webkit-overflow-scrolling: touch;
+        background: #fff; z-index: 100;
       }
       #itinerary {
-        position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-        overflow-y: scroll; -webkit-overflow-scrolling: touch;
         padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
       }
 
-      /* 지도: 기본 숨김 → show-map 시 flex:1 (Google Maps가 flex 높이 인식) */
+      /* 지도: 기본 숨김 → show-map 시 fixed로 표시 */
       #map { display: none; }
       body.show-map #sidebar { display: none; }
-      body.show-map #map { display: flex; flex: 1; min-height: 0; }
+      body.show-map #map {
+        display: block;
+        position: fixed; top: 44px; left: 0; right: 0; bottom: 0;
+        z-index: 100;
+      }
 
       #sidebar-header { display: none; }
       #legend { bottom: 16px; }
@@ -553,8 +554,8 @@ function switchMobileTab(tab) {
     document.body.classList.add("show-map");
     tabs[0].classList.remove("active");
     tabs[1].classList.add("active");
-    // 레이아웃 반영 후 지도 초기화/리사이즈 (Google Maps는 컨테이너 크기 계산에 한 프레임 필요)
-    requestAnimationFrame(() => {
+    // CSS 적용 후 충분한 시간 대기 (Google Maps가 fixed 컨테이너 크기를 정확히 인식)
+    setTimeout(() => {
       if (!mapReady) {
         createMap();
       } else {
@@ -570,7 +571,7 @@ function switchMobileTab(tab) {
           map.setZoom(6);
         }
       }
-    });
+    }, 200);
   } else {
     document.body.classList.remove("show-map");
     tabs[0].classList.add("active");
