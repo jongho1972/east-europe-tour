@@ -91,11 +91,12 @@
     }
 
     @media (max-width: 680px) {
-      body { display: block; height: auto; overflow-y: auto; }
+      body { display: block; height: 100vh; overflow: hidden; }
       #mobile-tabs {
         display: flex;
         position: fixed; top: 0; left: 0; right: 0; z-index: 2000;
         background: #fff; border-bottom: 1px solid #ddd;
+        height: 44px;
       }
       .mobile-tab {
         flex: 1; padding: 10px; text-align: center;
@@ -103,21 +104,22 @@
         color: #888; border-bottom: 3px solid transparent;
       }
       .mobile-tab.active { color: #2c3e50; border-bottom-color: #2c3e50; }
-      #sidebar {
-        width: 100%; min-width: unset;
-        margin-top: 44px;
-        height: auto; overflow: visible;
-        box-shadow: none;
-      }
-      #itinerary { overflow-y: visible; height: auto; flex: none; }
+      /* 지도: 항상 고정 렌더링 */
       #map {
         position: fixed; top: 44px; left: 0; right: 0; bottom: 0;
-        z-index: 1000;
-        visibility: hidden; pointer-events: none;
+        z-index: 500;
       }
-      body.show-map { overflow: hidden; }
-      body.show-map #sidebar { visibility: hidden; pointer-events: none; }
-      body.show-map #map { visibility: visible; pointer-events: auto; }
+      /* 일정: 지도 위에 올려서 스크롤 */
+      #sidebar {
+        position: fixed; top: 44px; left: 0; right: 0; bottom: 0;
+        z-index: 1000;
+        width: 100%; min-width: unset;
+        overflow-y: scroll; -webkit-overflow-scrolling: touch;
+        background: #fff; box-shadow: none;
+      }
+      #itinerary { overflow-y: visible; height: auto; flex: none; }
+      /* 지도 탭: 일정 패널 숨김 */
+      body.show-map #sidebar { display: none; }
       #sidebar-header { display: none; }
       #legend { bottom: 16px; }
     }
