@@ -91,11 +91,13 @@
     }
 
     @media (max-width: 680px) {
-      body { flex-direction: column; height: 100vh; overflow: hidden; }
+      body { display: block; height: 100vh; overflow: hidden; }
+      /* 탭: 항상 최상단 고정 */
       #mobile-tabs {
-        display: flex; flex-shrink: 0; height: 44px;
+        display: flex;
+        position: fixed; top: 0; left: 0; right: 0;
+        height: 44px; z-index: 9999;
         background: #fff; border-bottom: 1px solid #ddd;
-        position: relative; z-index: 2000;
       }
       .mobile-tab {
         flex: 1; padding: 10px; text-align: center;
@@ -103,21 +105,24 @@
         color: #888; border-bottom: 3px solid transparent;
       }
       .mobile-tab.active { color: #2c3e50; border-bottom-color: #2c3e50; }
-      /* 일정 탭: 사이드바 전체, 지도 숨김 */
+      /* 일정: 탭 아래 전체 영역 스크롤 */
       #sidebar {
-        width: 100%; min-width: unset; flex: 1; min-height: 0;
-        position: relative; overflow: hidden;
+        position: fixed; top: 44px; left: 0; right: 0; bottom: 0;
+        width: 100%; min-width: unset;
+        overflow-y: scroll; -webkit-overflow-scrolling: touch;
+        background: #fff; z-index: 100;
+        display: block;
       }
       #itinerary {
-        position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-        overflow-y: scroll; -webkit-overflow-scrolling: touch;
-        height: auto;
+        position: static; overflow-y: visible; height: auto;
         padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
       }
-      #map { display: none; }
-      /* 지도 탭: 지도 전체, 사이드바 숨김 */
+      /* 지도: 탭 아래 전체 영역 */
+      #map {
+        position: fixed; top: 44px; left: 0; right: 0; bottom: 0;
+        z-index: 50; display: block;
+      }
       body.show-map #sidebar { display: none; }
-      body.show-map #map { display: flex; flex: 1; min-height: 0; }
       #sidebar-header { display: none; }
       #legend { bottom: 16px; }
     }
