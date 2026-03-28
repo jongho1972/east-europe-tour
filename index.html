@@ -433,6 +433,11 @@ function createMap() {
     fullscreenControl: false,
   });
 
+  // 컨테이너 크기 변경 시 지도 재계산 (모바일 레이아웃 안정화)
+  google.maps.event.addListenerOnce(map, "tilesloaded", () => {
+    google.maps.event.trigger(map, "resize");
+  });
+
   infoWindow  = new google.maps.InfoWindow();
   tooltipWindow = new google.maps.InfoWindow({ disableAutoPan: true });
 
@@ -549,22 +554,24 @@ function switchMobileTab(tab) {
     document.body.classList.add("show-map");
     tabs[0].classList.remove("active");
     tabs[1].classList.add("active");
-    if (!mapReady) {
-      // 지도 탭 첫 클릭: 컨테이너가 보이는 상태에서 초기화
-      createMap();
-    } else {
-      google.maps.event.trigger(map, "resize");
-      if (activeHighlightDay) {
-        const d = DAYS.find(x => x.day === activeHighlightDay);
-        if (d && d.places.length > 0) {
-          map.panTo({ lat: d.places[0].lat, lng: d.places[0].lng });
-          map.setZoom(14);
-        }
+    // 레이아웃 반영 후 지도 초기화/리사이즈 (Google Maps는 컨테이너 크기 계산에 한 프레임 필요)
+    requestAnimationFrame(() => {
+      if (!mapReady) {
+        createMap();
       } else {
-        map.setCenter({ lat: 48.5, lng: 15.5 });
-        map.setZoom(6);
+        google.maps.event.trigger(map, "resize");
+        if (activeHighlightDay) {
+          const d = DAYS.find(x => x.day === activeHighlightDay);
+          if (d && d.places.length > 0) {
+            map.panTo({ lat: d.places[0].lat, lng: d.places[0].lng });
+            map.setZoom(14);
+          }
+        } else {
+          map.setCenter({ lat: 48.5, lng: 15.5 });
+          map.setZoom(6);
+        }
       }
-    }
+    });
   } else {
     document.body.classList.remove("show-map");
     tabs[0].classList.add("active");
