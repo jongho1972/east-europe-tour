@@ -91,13 +91,14 @@
     }
 
     @media (max-width: 680px) {
-      body { display: block; height: 100vh; overflow: hidden; }
-      /* 탭: 항상 최상단 고정 */
+      /* body: flex 컬럼 유지 — 지도가 flex:1로 공간 확보해야 Google Maps 정상 렌더링 */
+      body { flex-direction: column; height: 100vh; overflow: hidden; }
+
+      /* 탭: flex 아이템으로 44px 고정, z-index로 사이드바 위에 표시 */
       #mobile-tabs {
-        display: flex;
-        position: fixed; top: 0; left: 0; right: 0;
-        height: 44px; z-index: 9999;
+        display: flex; flex-shrink: 0; height: 44px;
         background: #fff; border-bottom: 1px solid #ddd;
+        position: relative; z-index: 9999;
       }
       .mobile-tab {
         flex: 1; padding: 10px; text-align: center;
@@ -105,26 +106,25 @@
         color: #888; border-bottom: 3px solid transparent;
       }
       .mobile-tab.active { color: #2c3e50; border-bottom-color: #2c3e50; }
-      /* 일정: 탭 아래 전체 영역 스크롤 */
+
+      /* 사이드바: 나머지 공간 차지, 내부 절대 포지셔닝으로 스크롤 */
       #sidebar {
-        position: fixed; top: 44px; left: 0; right: 0; bottom: 0;
         width: 100%; min-width: unset;
-        overflow-y: scroll; -webkit-overflow-scrolling: touch;
-        background: #fff; z-index: 100;
-        display: block;
+        flex: 1; min-height: 0;
+        position: relative; overflow: hidden;
+        z-index: 1;
       }
       #itinerary {
-        position: static; overflow-y: visible; height: auto;
+        position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+        overflow-y: scroll; -webkit-overflow-scrolling: touch;
         padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
       }
-      /* 지도: 기본 숨김 → show-map 시 완전히 펼침 (Google Maps는 visible 상태에서만 정상 렌더링) */
+
+      /* 지도: 기본 숨김 → show-map 시 flex:1로 나머지 공간 채움 */
       #map { display: none; }
-      body.show-map #map {
-        display: block;
-        position: fixed; top: 44px; left: 0; right: 0; bottom: 0;
-        z-index: 100;
-      }
       body.show-map #sidebar { display: none; }
+      body.show-map #map { display: flex; flex: 1; min-height: 0; }
+
       #sidebar-header { display: none; }
       #legend { bottom: 16px; }
     }
@@ -433,11 +433,6 @@ function createMap() {
     mapTypeControl: false,
     streetViewControl: false,
     fullscreenControl: false,
-  });
-
-  // 컨테이너 크기 변경 시 지도 재계산 (모바일 레이아웃 안정화)
-  google.maps.event.addListenerOnce(map, "tilesloaded", () => {
-    google.maps.event.trigger(map, "resize");
   });
 
   infoWindow  = new google.maps.InfoWindow();
