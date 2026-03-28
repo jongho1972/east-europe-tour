@@ -26,6 +26,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Maps JavaScript API 활성화 필요 (Google Cloud Console → 라이브러리)
 - 로컬 테스트: `python3 -m http.server 8080` 실행 후 `http://localhost:8080/동유럽여행일정지도.html`
 
+**모바일 레이아웃** (`max-width: 680px`):
+- `#mobile-tabs`: `position:fixed; top:0; height:44px; z-index:9999` — 항상 최상단 고정
+- `#sidebar`: `position:fixed; top:44px; left:0; right:0; bottom:0; overflow-y:scroll` — 탭 아래 전체 스크롤
+- `#map`: 기본 `display:none` → `body.show-map` 시 `position:fixed; top:44px; left:0; right:0; bottom:0`
+- 지도 초기화: `switchMobileTab('map')` 클릭 시 `setTimeout(createMap, 200)` — CSS 적용 후 Google Maps 초기화
+- Google Maps는 `display:none` 컨테이너에서 초기화 불가 → lazy init 필수
+- `body.show-map` 클래스 추가/제거로 일정↔지도 전환
+
 **핵심 데이터**: `DAYS` 배열 — 11일차 일정, 각 day마다 `places[]` 배열로 장소 정의
 ```js
 { day: N, date: "N일차", city: "도시명", cityKey: "budapest|vienna|prague|all", color: "#hex",
