@@ -111,13 +111,13 @@
       }
       #itinerary { overflow-y: visible; height: auto; flex: none; }
       #map {
-        display: none;
         position: fixed; top: 44px; left: 0; right: 0; bottom: 0;
         z-index: 1000;
+        visibility: hidden; pointer-events: none;
       }
       body.show-map { overflow: hidden; }
-      body.show-map #sidebar { display: none; }
-      body.show-map #map { display: block; }
+      body.show-map #sidebar { visibility: hidden; pointer-events: none; }
+      body.show-map #map { visibility: visible; pointer-events: auto; }
       #sidebar-header { display: none; }
       #legend { bottom: 16px; }
     }
@@ -530,18 +530,19 @@ function switchMobileTab(tab) {
     document.body.classList.add("show-map");
     tabs[0].classList.remove("active");
     tabs[1].classList.add("active");
-    google.maps.event.trigger(map, "resize");
-    // 선택된 일차가 있으면 해당 위치로, 없으면 전체 보기
-    if (activeHighlightDay) {
-      const d = DAYS.find(x => x.day === activeHighlightDay);
-      if (d && d.places.length > 0) {
-        map.panTo({ lat: d.places[0].lat, lng: d.places[0].lng });
-        map.setZoom(14);
+    requestAnimationFrame(() => {
+      google.maps.event.trigger(map, "resize");
+      if (activeHighlightDay) {
+        const d = DAYS.find(x => x.day === activeHighlightDay);
+        if (d && d.places.length > 0) {
+          map.panTo({ lat: d.places[0].lat, lng: d.places[0].lng });
+          map.setZoom(14);
+        }
+      } else {
+        map.setCenter({ lat: 48.5, lng: 15.5 });
+        map.setZoom(6);
       }
-    } else {
-      map.setCenter({ lat: 48.5, lng: 15.5 });
-      map.setZoom(6);
-    }
+    });
   } else {
     document.body.classList.remove("show-map");
     tabs[0].classList.add("active");
