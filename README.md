@@ -2,7 +2,7 @@
 
 2026년 여름 동유럽 여행 일정을 인터랙티브 지도로 보여주는 웹 앱입니다.
 
-**배포 URL**: https://east-europe-tour.netlify.app
+**배포 URL**: https://jhawk-east-europe-tour.netlify.app
 
 ## 여행 개요
 

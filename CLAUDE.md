@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 | 프로젝트 | 경로 | 배포 URL |
 |----------|------|----------|
-| 여행 코스 지도 (제목: 동유럽 여행 코스 2026) | `index.html` | https://east-europe-tour.netlify.app |
+| 여행 코스 지도 (제목: 동유럽 여행 코스 2026) | `index.html` | https://jhawk-east-europe-tour.netlify.app |
 
 ## 배포 방식
 
@@ -29,7 +29,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **지도 라이브러리**: Google Maps JavaScript API
 - API 키: Google Cloud Console "My Maps Project" 프로젝트
-- 도메인 제한: `https://east-europe-tour.netlify.app/*`, `http://localhost/*`
+- 도메인 제한: `https://jhawk-east-europe-tour.netlify.app/*`, `http://localhost/*`
 - Maps JavaScript API 활성화 필요 (Google Cloud Console → 라이브러리)
 - 로컬 테스트: `python3 -m http.server 8080` 실행 후 `http://localhost:8080/동유럽여행일정지도.html`
 
@@ -75,7 +75,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `index.html`: 프로필 섹션 + 여행 일정 iframe 섹션
 - `index.css`: 모든 스타일 (Nanum Gothic 폰트)
 - `jh.jpg`: 프로필 사진
-- 여행 일정은 `east-europe-tour.netlify.app`을 **iframe으로 임베드** — 직접 코드 없음
+- 여행 일정은 `jhawk-east-europe-tour.netlify.app`을 **iframe으로 임베드** — 직접 코드 없음
 
 **링크 카드 패턴** (`.travel-btn`):
 ```html
