@@ -132,9 +132,69 @@
       #sidebar-header { display: none; }
       #legend { bottom: 16px; }
     }
+
+    /* ── 비밀번호 게이트 ── */
+    #auth-gate {
+      position: fixed; inset: 0; z-index: 9999;
+      background: linear-gradient(135deg, #2c3e50, #3498db);
+      display: flex; align-items: center; justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    }
+    #auth-gate .gate-card {
+      background: #fff; border-radius: 16px; padding: 28px 24px;
+      width: 300px; box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+      text-align: center;
+    }
+    #auth-gate h2 { font-size: 16px; font-weight: 700; color: #1c1c1e; margin-bottom: 6px; }
+    #auth-gate p { font-size: 12px; color: #8e8e93; margin-bottom: 16px; }
+    #auth-gate input[type="password"] {
+      width: 100%; padding: 11px 13px; font-size: 15px;
+      border: 1px solid #d1d1d6; border-radius: 10px; outline: none;
+      margin-bottom: 10px; text-align: center; letter-spacing: 2px;
+    }
+    #auth-gate input[type="password"]:focus { border-color: #3498db; }
+    #auth-gate button {
+      width: 100%; padding: 11px; font-size: 14px; font-weight: 600;
+      background: #2c3e50; color: #fff; border: none; border-radius: 10px; cursor: pointer;
+    }
+    #auth-gate button:hover { background: #34495e; }
+    #auth-gate .err { font-size: 12px; color: #e63946; min-height: 16px; margin-top: 6px; }
+    body.auth-locked { overflow: hidden; }
+    body.auth-locked #sidebar, body.auth-locked #map { visibility: hidden; }
   </style>
 </head>
-<body>
+<body class="auth-locked">
+  <div id="auth-gate">
+    <div class="gate-card">
+      <h2>가족 전용 페이지</h2>
+      <p>비밀번호를 입력해 주세요</p>
+      <form id="auth-form" autocomplete="off">
+        <input type="password" id="auth-input" inputmode="numeric" autofocus />
+        <button type="submit">확인</button>
+        <div class="err" id="auth-err"></div>
+      </form>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var PW = '0000';
+      var form = document.getElementById('auth-form');
+      var input = document.getElementById('auth-input');
+      var err = document.getElementById('auth-err');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (input.value === PW) {
+          document.body.classList.remove('auth-locked');
+          document.getElementById('auth-gate').remove();
+        } else {
+          err.textContent = '죄송합니다. 접속이 제한되는 페이지입니다.';
+          input.value = '';
+          input.focus();
+        }
+      });
+    })();
+  </script>
+
 
 <div id="mobile-tabs">
   <div class="mobile-tab active" onclick="switchMobileTab('schedule')">📋 일정</div>

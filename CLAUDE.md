@@ -16,6 +16,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - GitHub `main` 브랜치 푸시 시 Netlify 자동 배포
 - `.gitignore`로 PDF, xlsx, gmap, gsheet, txt 파일은 제외 (`index.html`, `CLAUDE.md`만 관리)
 
+## 비밀번호 게이트
+
+- 페이지 진입 시 오버레이형 `#auth-gate`가 `body.auth-locked`와 함께 노출
+- 비밀번호: `0000` (스크립트 내 `PW` 상수)
+- sessionStorage 저장 금지 — 매 로드 재인증 (Chrome 세션 복원 이슈 방지)
+- 테마: 동유럽 프로젝트 블루 그라디언트(`#2c3e50 → #3498db`)
+
 ## 동유럽여행일정지도.html 구조
 
 단일 HTML 파일에 CSS, JavaScript가 모두 포함된 self-contained 구조입니다.
