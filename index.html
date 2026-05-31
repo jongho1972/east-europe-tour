@@ -3,7 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>동유럽 여행 코스 2026</title>
+  <title>동유럽 여행 코스 · 부다페스트·비엔나·프라하 9박 11일 인터랙티브 지도</title>
+  <meta name="description" content="동유럽 3국(헝가리·오스트리아·체코) 부다페스트·비엔나·잘츠부르크·할슈타트·체스키크룸로프·프라하 9박 11일 여행 코스. 일자별 일정과 도시 간 이동 경로를 인터랙티브 지도로 안내합니다." />
+  <meta name="keywords" content="동유럽여행,부다페스트여행,비엔나여행,프라하여행,할슈타트,체스키크룸로프,잘츠부르크,헝가리오스트리아체코,9박11일,동유럽일정,여행코스" />
+  <meta name="author" content="jhawk" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://tour-europe-jhawk.netlify.app/" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232c3e50'/><text x='50' y='55' font-size='58' text-anchor='middle' dominant-baseline='central'>🏰</text></svg>" />
+  <!-- Open Graph (카카오톡·페이스북 공유 미리보기) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ko_KR" />
+  <meta property="og:site_name" content="동유럽 여행 코스" />
+  <meta property="og:title" content="동유럽 여행 코스 · 부다페스트·비엔나·프라하 9박 11일" />
+  <meta property="og:description" content="헝가리·오스트리아·체코 3국 부다페스트·비엔나·할슈타트·체스키크룸로프·프라하 9박 11일 일정과 이동 경로를 인터랙티브 지도로 안내합니다." />
+  <meta property="og:url" content="https://tour-europe-jhawk.netlify.app/" />
+  <meta property="og:image" content="https://tour-europe-jhawk.netlify.app/og-image.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="동유럽 여행 코스 인터랙티브 지도" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="동유럽 여행 코스 · 부다페스트·비엔나·프라하 9박 11일" />
+  <meta name="twitter:description" content="헝가리·오스트리아·체코 3국 9박 11일 일정과 이동 경로를 담은 인터랙티브 지도" />
+  <meta name="twitter:image" content="https://tour-europe-jhawk.netlify.app/og-image.jpg" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; display: flex; height: 100vh; overflow: hidden; background: #f0f0f5; }
@@ -133,69 +156,9 @@
       #legend { bottom: 16px; }
     }
 
-    /* ── 비밀번호 게이트 ── */
-    #auth-gate {
-      position: fixed; inset: 0; z-index: 9999;
-      background: linear-gradient(135deg, #2c3e50, #3498db);
-      display: flex; align-items: center; justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-    }
-    #auth-gate .gate-card {
-      background: #fff; border-radius: 16px; padding: 28px 24px;
-      width: 300px; box-shadow: 0 16px 40px rgba(0,0,0,0.25);
-      text-align: center;
-    }
-    #auth-gate h2 { font-size: 16px; font-weight: 700; color: #1c1c1e; margin-bottom: 6px; }
-    #auth-gate p { font-size: 12px; color: #8e8e93; margin-bottom: 16px; }
-    #auth-gate input[type="password"] {
-      width: 100%; padding: 11px 13px; font-size: 15px;
-      border: 1px solid #d1d1d6; border-radius: 10px; outline: none;
-      margin-bottom: 10px; text-align: center; letter-spacing: 2px;
-    }
-    #auth-gate input[type="password"]:focus { border-color: #3498db; }
-    #auth-gate button {
-      width: 100%; padding: 11px; font-size: 14px; font-weight: 600;
-      background: #2c3e50; color: #fff; border: none; border-radius: 10px; cursor: pointer;
-    }
-    #auth-gate button:hover { background: #34495e; }
-    #auth-gate .err { font-size: 12px; color: #e63946; min-height: 16px; margin-top: 6px; }
-    body.auth-locked { overflow: hidden; }
-    body.auth-locked #sidebar, body.auth-locked #map { visibility: hidden; }
   </style>
 </head>
-<body class="auth-locked">
-  <div id="auth-gate">
-    <div class="gate-card">
-      <h2>가족 전용 페이지</h2>
-      <p>비밀번호를 입력해 주세요</p>
-      <form id="auth-form" autocomplete="off">
-        <input type="password" id="auth-input" inputmode="numeric" autofocus />
-        <button type="submit">확인</button>
-        <div class="err" id="auth-err"></div>
-      </form>
-    </div>
-  </div>
-  <script>
-    (function () {
-      var PW = '0000';
-      var form = document.getElementById('auth-form');
-      var input = document.getElementById('auth-input');
-      var err = document.getElementById('auth-err');
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        if (input.value === PW) {
-          document.body.classList.remove('auth-locked');
-          document.getElementById('auth-gate').remove();
-        } else {
-          err.textContent = '죄송합니다. 접속이 제한되는 페이지입니다.';
-          input.value = '';
-          input.focus();
-        }
-      });
-    })();
-  </script>
-
-
+<body>
 <div id="mobile-tabs">
   <div class="mobile-tab active" onclick="switchMobileTab('schedule')">📋 일정</div>
   <div class="mobile-tab" onclick="switchMobileTab('map')">🗺 지도</div>
@@ -204,8 +167,8 @@
 
 <div id="sidebar">
   <div id="sidebar-header">
-    <h1>JH&amp;W Family's East Europe Tour 2026</h1>
-    <p>9박 11일</p>
+    <h1>동유럽 여행 코스 · 부다페스트·비엔나·프라하</h1>
+    <p>헝가리 · 오스트리아 · 체코 9박 11일</p>
   </div>
   <div id="city-tabs">
     <div class="city-tab active" data-city="all">전체</div>

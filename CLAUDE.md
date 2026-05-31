@@ -1,5 +1,8 @@
 # CLAUDE.md
 
+> **여행 일정 상태: 보류** — 항공권 가격 급등(+49%)으로 실제 여행은 보류, 가격 정상화 시 재추진. 메모리 `project_europe_trip_hold` 참조.
+> **사이트 상태: 일반 공개 추천 코스** (2026-05-31 전환) — 가족 전용 비번 게이트(`0000`) 제거, SEO·OG 공유 이미지 추가. 여행 자체는 보류지만 코스 지도는 누구나 볼 수 있는 공개 추천 코스로 운영.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## 프로젝트 개요
@@ -16,12 +19,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - GitHub `main` 브랜치 푸시 시 Netlify 자동 배포
 - `.gitignore`로 PDF, xlsx, gmap, gsheet, txt 파일은 제외 (`index.html`, `CLAUDE.md`만 관리)
 
-## 비밀번호 게이트
+## 공개 페이지 (비밀번호 게이트 제거됨)
 
-- 페이지 진입 시 오버레이형 `#auth-gate`가 `body.auth-locked`와 함께 노출
-- 비밀번호: `0000` (스크립트 내 `PW` 상수)
-- sessionStorage 저장 금지 — 매 로드 재인증 (Chrome 세션 복원 이슈 방지)
-- 테마: 동유럽 프로젝트 블루 그라디언트(`#2c3e50 → #3498db`)
+- 2026-05-31 일반 공개 전환으로 **비밀번호 게이트 제거** — 이전 `#auth-gate`·`body.auth-locked`·`PW='0000'` 로직(CSS/HTML/JS) 전부 삭제, `<body>`는 클래스 없음. 누구나 바로 열람.
+- **SEO/공유**: `<head>`에 meta description·keywords·canonical·robots + Open Graph + Twitter Card + 인라인 SVG favicon(🏰). OG 공유 이미지는 `og-image.jpg`(1200×630, pollinations flux 동유럽 도시 풍경, repo 루트에 포함 → git push 시 함께 배포, `https://tour-europe-jhawk.netlify.app/og-image.jpg`).
+- 사이드바 헤더 제목은 가족 표현 제거 후 공개용(`동유럽 여행 코스 · 부다페스트·비엔나·프라하` / `헝가리 · 오스트리아 · 체코 9박 11일`).
 
 ## 동유럽여행일정지도.html 구조
 
