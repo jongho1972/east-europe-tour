@@ -29,7 +29,7 @@
   <meta name="twitter:image" content="https://tour-europe-jhawk.netlify.app/og-image.jpg" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; display: flex; height: 100vh; overflow: hidden; background: #f0f0f5; }
+    body { font-family: Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; display: flex; height: 100vh; overflow: hidden; background: #f0f0f5; }
 
     #sidebar {
       width: 340px; min-width: 340px; background: #fff;
@@ -156,7 +156,9 @@
       #legend { bottom: 16px; }
     }
 
+    button,input,select,textarea{font-family:inherit}
   </style>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" rel="stylesheet">
 </head>
 <body>
 <div id="mobile-tabs">
@@ -338,7 +340,7 @@ function makeIcon(color, dayNum, scale) {
   const h = Math.round(46 * scale);
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 38 46">
     <path d="M19 0C8.5 0 0 8.5 0 19c0 14.3 19 27 19 27S38 33.3 38 19C38 8.5 29.5 0 19 0z" fill="${color}" stroke="white" stroke-width="1.5"/>
-    <text x="19" y="23" text-anchor="middle" font-size="10" font-weight="bold" fill="white" font-family="Arial">D${dayNum}</text>
+    <text x="19" y="23" text-anchor="middle" font-size="10" font-weight="bold" fill="white" font-family="Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif">D${dayNum}</text>
   </svg>`;
   return {
     url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg),

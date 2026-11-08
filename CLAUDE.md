@@ -75,7 +75,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## MyHomepage 구조
 
 - `index.html`: 프로필 섹션 + 여행 일정 iframe 섹션
-- `index.css`: 모든 스타일 (Nanum Gothic 폰트)
+- `index.html`: 스타일 포함 단일 파일 (프리텐다드 폰트, 2026-11-08 전환)
 - `jh.jpg`: 프로필 사진
 - 여행 일정은 `tour-europe-jhawk.netlify.app`을 **iframe으로 임베드** — 직접 코드 없음
 
